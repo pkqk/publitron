@@ -1,4 +1,4 @@
-from slog import template
+from publitron import template
 
 import os.path
 
