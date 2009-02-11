@@ -1,4 +1,4 @@
-from publitron import template
+from . import template
 
 import os.path
 
