@@ -26,6 +26,4 @@ class StaticPublisher:
 
   def path_from_request(self):
     path = os.path.normpath(self.environ.get('PATH_INFO'))[1:]
-    if path == '':
-      path = 'index'
     return os.path.join(self.doc_root, '%s.doc' % path)
