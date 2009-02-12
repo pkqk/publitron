@@ -1,25 +1,25 @@
 import traceback
 
-def standard(values):
+def standard(attrs, content):
   return ["\n".join(
-    doctype(values) +
+    prelude(attrs) +
     surround('html',
-      surround('head',title(values)+stylesheet(values)) +
-      body(values)
+      surround('head',title(attrs)+stylesheet(attrs)) +
+      body(attrs, content)
     )
   )]
 
-def title(values):
-  return surround('title',values['title'])
+def title(attrs):
+  return surround('title',attrs['title'])
   
-def doctype(values):
+def prelude(attrs):
   return ['<!doctype html>']
   
-def stylesheet(values):
+def stylesheet(attrs):
   return ['<link rel="stylesheet" href="/style/base.css" type="text/css" media="all" />']
 
-def body(values):
-  return surround('body',values['body'])
+def body(attrs, content):
+  return surround('body', content)
   
 def surround(tag,content):
   if isinstance(content,str):

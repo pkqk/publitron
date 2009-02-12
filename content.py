@@ -1,6 +1,7 @@
 from . import template
 
 import os.path
+import json
 
 class StaticPublisher:
   def __init__(self, doc_root):
@@ -10,8 +11,8 @@ class StaticPublisher:
     self.environ = environ
     try:
       with open(self.path_from_request()) as doc:
-        values = {'title': 'test title', 'body': doc.read()}
-        response = template.standard(values)
+        attrs, content = self.load_document(doc.read())
+        response = template.standard(attrs, content)
         start_response('200 OK', [('Content-Type','text/html;charset=utf-8')])
         return response
     except IOError as e:
@@ -27,3 +28,9 @@ class StaticPublisher:
   def path_from_request(self):
     path = os.path.normpath(self.environ.get('PATH_INFO'))[1:]
     return os.path.join(self.doc_root, '%s.doc' % path)
+    
+  def load_document(self,data):
+    decoder = json.JSONDecoder()
+    attrs, idx = decoder.raw_decode(data)
+    content = data[idx:].strip()
+    return attrs, content
