@@ -39,7 +39,7 @@ class StandardTemplate:
         self.surround('head',self.title()+self.stylesheet()) +
         self.body()
       )
-    )]
+    ).encode('utf-8')]
 
 def error(exception):
   return ["\n".join([repr(exception),str(exception)]+traceback.format_tb(exception.__traceback__))]
